@@ -1,29 +1,27 @@
 #!/bin/bash
 
-# Variablen initialisieren
-SSH_USER=
-SSH_PASS=
-REMOTE_DIR=/var/www/.../.
-LOCAL_DIR=/var/www/.../.
-
+# Variablen initialisieren (Remote)
+SERVER=
 REMOTE_MYSQL_USER=
 REMOTE_MYSQL_PASS=
 REMOTE_MYSQL_DB=
 REMOTE_MYSQL_HOST=
+REMOTE_DIR=/var/www/.../.
+SSH_USER=
+SSH_PASS=
 
+# Variablen initialisieren (Local)
 LOCAL_MYSQL_USER=
 LOCAL_MYSQL_PASS=
 LOCAL_MYSQL_DB=
 LOCAL_MYSQL_HOST=
-
-SERVER=
-
+LOCAL_DIR=/var/www/.../.
 LOCAL_USER=
 LOCAL_GROUP=
 
 # Synchronisiere Dateien
 echo "Synchronisiere Dateien..."
-rsync -chavzP --delete --stats ${SSH_USER}@${SERVER}:$REMOTE_DIR $LOCAL_DIR
+rsync -chavzP --delete --stats ${SSH_USER}@${SERVER}:${REMOTE_DIR} ${LOCAL_DIR}
 echo "Fertig."
 
 # Setze Besitzer und Gruppe
