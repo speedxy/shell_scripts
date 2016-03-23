@@ -35,10 +35,10 @@ if [ $# = 0 ] ; then # Keine Argumente: Starte interaktiven Modus
 
     # Variablen initialisieren (Local)
     LOCAL_MYSQL_HOST=$9
-    LOCAL_MYSQL_USER=$10
-    LOCAL_MYSQL_PASS=$11
-    LOCAL_MYSQL_DB=$12
-    LOCAL_DIR=$13
+    LOCAL_MYSQL_USER=${10}
+    LOCAL_MYSQL_PASS=${11}
+    LOCAL_MYSQL_DB=${12}
+    LOCAL_DIR=${13}
 fi
 
 # Parameter-Zusammenfassung (debugging)
