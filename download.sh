@@ -3,13 +3,20 @@
 # Dieses Script lädt von einem entfernten Rechner per SSH ein angegebenes Verzeichnis rekursiv per rsync herunter unter Aussparung von bereits vorhandenen Dateien
 # Zudem wird per SSH getunnelt die zugehörige MySQL-Datenbank übertragen und lokal eingespielt
 
+# Prüfe Umgebung
+PROGRAM="sshpass"
+CONDITION=$(which $PROGRAM 2>/dev/null | grep -v "not found" | wc -l)
+if [ $CONDITION -eq 0 ] ; then
+  echo "$PROGRAM ist nicht installiert."
+  exit
+fi
+
 # Prüfe Parameter
-if [ $# = 0 ]
-  then # Keine Argumente: Starte interaktiven Modus
-    echo "Usage: $0 remote_server remote_ssh_user remote_ssh_pass remote_mysql_host remote_mysql_user remote_mysql_pass remote_mysql_db remote_dir local_mysql_host local_mysql_user local_mysql_pass local_mysql_db local_dir"
+if [ $# = 0 ] ; then # Keine Argumente: Starte interaktiven Modus
+    echo "Usage: $0 remote_host remote_ssh_user remote_ssh_pass remote_mysql_host remote_mysql_user remote_mysql_pass remote_mysql_db remote_dir local_mysql_host local_mysql_user local_mysql_pass local_mysql_db local_dir"
     exit 65
     # @Todo
-    #read -e -p "Remote Server: " WEB
+    #read -e -p "Remote Host: " WEB
     #read -e -p "Web-Passwort (FTP & Shell): " -e PASS
     #read -e -p "MySQL-Passwort: " -s MYSQL_PASS
     #read -e -p "Datenbank (usr_{$WEB}_X): " DATABASE
@@ -17,7 +24,7 @@ if [ $# = 0 ]
     #read -e -p "Verzeichnis: /var/www/$WEB/html/" -i "/var/www/$WEB/html/" HTDOCS
   else # Alle Parameter übergeben
     # Variablen initialisieren (Remote)
-    REMOTE_SERVER=$1
+    REMOTE_HOST=$1
     REMOTE_SSH_USER=$2
     REMOTE_SSH_PASS=$3
     REMOTE_MYSQL_HOST=$4
@@ -35,16 +42,17 @@ if [ $# = 0 ]
 fi
 
 # Parameter-Zusammenfassung (debugging)
-echo "Synchronisiere Dateisystem: $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR => $LOCAL_USER:$LOCAL_GROUP@$LOCAL_HOST:$HOST_DIR"
-echo "Synchronisiere Datenbank: $REMOTE_MYSQL_USER@$REMOTE_MYSQL_HOST.$REMOTE_DB => $LOCAL_MYSQL_USER@$LOCAL_MYSQL_HOST.$HOST_MYSQL_DB"
+echo "Synchronisiere Dateisystem: $REMOTE_SSH_USER@$REMOTE_HOST:$REMOTE_DIR => $LOCAL_DIR"
+echo "Synchronisiere Datenbank: $REMOTE_MYSQL_USER@$REMOTE_MYSQL_HOST.$REMOTE_MYSQL_DB => $LOCAL_MYSQL_USER@$LOCAL_MYSQL_HOST.$HOST_MYSQL_DB"
 
 exit;
 # Synchronisiere Dateien
 echo "Synchronisiere Dateien..."
-rsync -chvzP --delete --stats ${REMOTE_SSH_USER}@${REMOTE_SERVER}:${REMOTE_DIR} ${LOCAL_DIR}
+rsync -chvzP --delete --stats ${REMOTE_SSH_USER}@${REMOTE_HOST}:${REMOTE_DIR} ${LOCAL_DIR}
 echo "Fertig."
 
 # Synchronisiere Datenbank
 echo "Synchronisiere Datenbank..."
-ssh ${REMOTE_SSH_USER}@${REMOTE_SERVER} "mysqldump -h${REMOTE_MYSQL_HOST} -u${REMOTE_MYSQL_USER} -p${REMOTE_MYSQL_PASS} ${REMOTE_MYSQL_DB}" | mysql -h${LOCAL_MYSQL_HOST} -u$LOCAL_MYSQL_USER -p$LOCAL_MYSQL_PASS $LOCAL_MYSQL_DB
+sshpass -p '$REMOTE_SSH_PASS' ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet $REMOTE_SSH_USER@${REMOTE_HOST} 'mysqldump -h${REMOTE_MYSQL_HOST} -u${REMOTE_MYSQL_USER} -p${REMOTE_MYSQL_PASS} ${REMOTE_MYSQL_DB}' | mysql -h${LOCAL_MYSQL_HOST} -u$LOCAL_MYSQL_USER -p$LOCAL_MYSQL_PASS $LOCAL_MYSQL_DB
+#ssh ${REMOTE_SSH_USER}@${REMOTE_HOST} "mysqldump -h${REMOTE_MYSQL_HOST} -u${REMOTE_MYSQL_USER} -p${REMOTE_MYSQL_PASS} ${REMOTE_MYSQL_DB}" | mysql -h${LOCAL_MYSQL_HOST} -u$LOCAL_MYSQL_USER -p$LOCAL_MYSQL_PASS $LOCAL_MYSQL_DB
 echo "Fertig."
