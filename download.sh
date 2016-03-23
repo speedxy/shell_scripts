@@ -43,12 +43,11 @@ fi
 
 # Parameter-Zusammenfassung (debugging)
 echo "Synchronisiere Dateisystem: $REMOTE_SSH_USER@$REMOTE_HOST:$REMOTE_DIR => $LOCAL_DIR"
-echo "Synchronisiere Datenbank: $REMOTE_MYSQL_USER@$REMOTE_MYSQL_HOST.$REMOTE_MYSQL_DB => $LOCAL_MYSQL_USER@$LOCAL_MYSQL_HOST.$HOST_MYSQL_DB"
+echo "Synchronisiere Datenbank: $REMOTE_MYSQL_USER@$REMOTE_MYSQL_HOST.$REMOTE_MYSQL_DB => $LOCAL_MYSQL_USER@$LOCAL_MYSQL_HOST.$LOCAL_MYSQL_DB"
 
-exit;
 # Synchronisiere Dateien
 echo "Synchronisiere Dateien..."
-rsync -chvzP --delete --stats ${REMOTE_SSH_USER}@${REMOTE_HOST}:${REMOTE_DIR} ${LOCAL_DIR}
+sshpass -p "$REMOTE_SSH_PASS" rsync -rltchvzP --delete --stats ${REMOTE_SSH_USER}@${REMOTE_HOST}:${REMOTE_DIR} ${LOCAL_DIR}
 echo "Fertig."
 
 # Synchronisiere Datenbank
