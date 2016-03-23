@@ -8,6 +8,7 @@
 # - Berücksichtigung des CMS; z.B. Ignorieren von typo3temp bei TYPO3; Anpassen der CMS-Konfiguration
 # - Automatische Bereinigung des Downloads
 # - Interaktive Parameterermittlung
+# - Bedienung ohne sshpass (interaktiv) ermöglichen
 #####
 
 # Prüfe Umgebung
@@ -60,6 +61,4 @@ echo "Fertig."
 # Synchronisiere Datenbank
 echo "Synchronisiere Datenbank..."
 sshpass -p "${REMOTE_SSH_PASS}" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet ${REMOTE_SSH_USER}@${REMOTE_HOST} "mysqldump -h${REMOTE_MYSQL_HOST} -u${REMOTE_MYSQL_USER} -p${REMOTE_MYSQL_PASS} ${REMOTE_MYSQL_DB}" | mysql -h${LOCAL_MYSQL_HOST} -u$LOCAL_MYSQL_USER -p$LOCAL_MYSQL_PASS $LOCAL_MYSQL_DB
-#sshpass -p "${REMOTE_SSH_PASS}" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ${REMOTE_SSH_USER}@${REMOTE_HOST} "ls -al"
-#ssh ${REMOTE_SSH_USER}@${REMOTE_HOST} "mysqldump -h${REMOTE_MYSQL_HOST} -u${REMOTE_MYSQL_USER} -p${REMOTE_MYSQL_PASS} ${REMOTE_MYSQL_DB}" | mysql -h${LOCAL_MYSQL_HOST} -u$LOCAL_MYSQL_USER -p$LOCAL_MYSQL_PASS $LOCAL_MYSQL_DB
 echo "Fertig."
