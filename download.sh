@@ -7,6 +7,7 @@
 # ToDo:
 # - Berücksichtigung des CMS; z.B. Ignorieren von typo3temp bei TYPO3; Anpassen der CMS-Konfiguration
 # - Automatische Bereinigung des Downloads
+# - Interaktive Parameterermittlung
 #####
 
 # Prüfe Umgebung
