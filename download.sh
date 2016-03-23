@@ -55,7 +55,7 @@ echo "Synchronisiere Datenbank: $REMOTE_MYSQL_USER@$REMOTE_MYSQL_HOST.$REMOTE_MY
 
 # Synchronisiere Dateien
 echo "Synchronisiere Dateien..."
-sshpass -p "${REMOTE_SSH_PASS}" rsync -rltchvzP --delete --stats ${REMOTE_SSH_USER}@${REMOTE_HOST}:${REMOTE_DIR} ${LOCAL_DIR}
+sshpass -p "${REMOTE_SSH_PASS}" rsync -rltchvzP --delete ${REMOTE_SSH_USER}@${REMOTE_HOST}:${REMOTE_DIR} ${LOCAL_DIR}
 echo "Fertig."
 
 # Synchronisiere Datenbank
