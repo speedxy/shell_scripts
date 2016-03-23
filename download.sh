@@ -25,7 +25,7 @@ if [ $# = 0 ]
     REMOTE_MYSQL_PASS=$6
     REMOTE_MYSQL_DB=$7
     REMOTE_DIR=$8
-    
+
     # Variablen initialisieren (Local)
     LOCAL_USER=$9
     LOCAL_GROUP=$10
