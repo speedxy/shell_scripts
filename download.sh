@@ -1,4 +1,7 @@
 #!/bin/bash
+# Eike Swat <swat@parrot-media.de>
+# Dieses Script lädt von einem entfernten Rechner per SSH ein angegebenes Verzeichnis rekursiv per rsync herunter unter Aussparung von bereits vorhandenen Dateien
+# Zudem wird per SSH getunnelt die zugehörige MySQL-Datenbank übertragen und lokal eingespielt
 
 # Variablen initialisieren (Remote)
 SERVER=
