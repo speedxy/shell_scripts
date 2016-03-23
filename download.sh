@@ -27,13 +27,13 @@ if [ $# = 0 ]
     REMOTE_DIR=$8
     
     # Variablen initialisieren (Local)
-    LOCAL_USER=
-    LOCAL_GROUP=
-    LOCAL_MYSQL_HOST=
-    LOCAL_MYSQL_USER=
-    LOCAL_MYSQL_PASS=
-    LOCAL_MYSQL_DB=
-    LOCAL_DIR=/var/www/.../.
+    LOCAL_USER=$9
+    LOCAL_GROUP=$10
+    LOCAL_MYSQL_HOST=$11
+    LOCAL_MYSQL_USER=$12
+    LOCAL_MYSQL_PASS=$13
+    LOCAL_MYSQL_DB=$14
+    LOCAL_DIR=$15
 fi
 
 # Synchronisiere Dateien
