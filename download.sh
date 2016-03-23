@@ -6,7 +6,7 @@
 # Prüfe Parameter
 if [ $# = 0 ]
   then # Keine Argumente: Starte interaktiven Modus
-    echo "Usage: $0 remote_server remote_ssh_user remote_ssh_pass remote_mysql_host remote_mysql_user remote_mysql_pass remote_mysql_db remote_dir local_user local_group local_mysql_host local_mysql_user local_mysql_pass local_mysql_db local_dir"
+    echo "Usage: $0 remote_server remote_ssh_user remote_ssh_pass remote_mysql_host remote_mysql_user remote_mysql_pass remote_mysql_db remote_dir local_mysql_host local_mysql_user local_mysql_pass local_mysql_db local_dir"
     exit 65
     # @Todo
     #read -e -p "Remote Server: " WEB
@@ -27,23 +27,21 @@ if [ $# = 0 ]
     REMOTE_DIR=$8
 
     # Variablen initialisieren (Local)
-    LOCAL_USER=$9
-    LOCAL_GROUP=$10
-    LOCAL_MYSQL_HOST=$11
-    LOCAL_MYSQL_USER=$12
-    LOCAL_MYSQL_PASS=$13
-    LOCAL_MYSQL_DB=$14
-    LOCAL_DIR=$15
+    LOCAL_MYSQL_HOST=$9
+    LOCAL_MYSQL_USER=$10
+    LOCAL_MYSQL_PASS=$11
+    LOCAL_MYSQL_DB=$12
+    LOCAL_DIR=$13
 fi
 
+# Parameter-Zusammenfassung (debugging)
+echo "Synchronisiere Dateisystem: $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR => $LOCAL_USER:$LOCAL_GROUP@$LOCAL_HOST:$HOST_DIR"
+echo "Synchronisiere Datenbank: $REMOTE_MYSQL_USER@$REMOTE_MYSQL_HOST.$REMOTE_DB => $LOCAL_MYSQL_USER@$LOCAL_MYSQL_HOST.$HOST_MYSQL_DB"
+
+exit;
 # Synchronisiere Dateien
 echo "Synchronisiere Dateien..."
-rsync -chavzP --delete --stats ${REMOTE_SSH_USER}@${REMOTE_SERVER}:${REMOTE_DIR} ${LOCAL_DIR}
-echo "Fertig."
-
-# Setze Besitzer und Gruppe
-echo "Setze lokale Berechtigungen..."
-chown -R $LOCAL_USER:$LOCAL_GROUP $LOCAL_DIR
+rsync -chvzP --delete --stats ${REMOTE_SSH_USER}@${REMOTE_SERVER}:${REMOTE_DIR} ${LOCAL_DIR}
 echo "Fertig."
 
 # Synchronisiere Datenbank
