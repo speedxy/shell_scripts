@@ -9,6 +9,7 @@
 # - Automatische Bereinigung des Downloads
 # - Interaktive Parameterermittlung
 # - Bedienung ohne sshpass (interaktiv) ermöglichen
+# - Prüfen auf abschließenden Slash von Pfaden (Es muss ein Slash angegeben sein)
 #####
 
 # Prüfe Umgebung
