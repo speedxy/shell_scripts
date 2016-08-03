@@ -9,6 +9,9 @@ LOCAL_MYSQL_DB="local_db"
 LOCAL_MYSQL_USER=""
 LOCAL_MYSQL_PASS=""
 
+CMS="typo3-6"
+# typo3-6 | pmcms | wordpress
+
 # ===
 
 SCRIPT_DIR=$(dirname "$0")
