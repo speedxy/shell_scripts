@@ -13,7 +13,7 @@ LOCAL_MYSQL_USER=""
 LOCAL_MYSQL_PASS=""
 LOCAL_MYSQL_DB=""
 LOCAL_DIR="$SCRIPT_DIR/"
-# CMS (typo3-6 | pmcms | wordpress)
+# CMS (typo3-6 | pmcms | wordpress | shopware)
 CMS=""
 
 # ===
