@@ -10,6 +10,7 @@
 # - Interaktive Parameterermittlung
 # - Interaktiv Bedienung ermöglichen
 # - Prüfen auf abschließenden Slash von Pfaden (Es muss ein Slash angegeben sein)
+# - Bereinigen der Datenbank vor Import?
 #####
 
 # Prüfe Parameter
