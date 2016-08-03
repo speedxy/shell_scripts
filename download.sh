@@ -89,12 +89,24 @@ case "$CMS" in
     chmod u+x $LOCAL_DIR/bin/console
     $LOCAL_DIR/var/cache/clear_cache.sh
     ;;
+    "veyton")
+    # VEYTON
+    sed -i "s/define('_SYSTEM_DATABASE_PWD', '$REMOTE_MYSQL_PASS');/define('_SYSTEM_DATABASE_HOST', '$LOCAL_MYSQL_PASS');/" $LOCAL_DIR/conf/config.php
+    sed -i "s/define('_SYSTEM_DATABASE_USER', '$REMOTE_MYSQL_USER');/define('_SYSTEM_DATABASE_HOST', '$LOCAL_MYSQL_USER');/" $LOCAL_DIR/conf/config.php
+    sed -i "s/define('_SYSTEM_DATABASE_DATABASE', '$REMOTE_MYSQL_DB');/define('_SYSTEM_DATABASE_HOST', '$LOCAL_MYSQL_DB');/" $LOCAL_DIR/conf/config.php
+    sed -i "s/define('_SYSTEM_DATABASE_HOST', '$REMOTE_MYSQL_HOST');/define('_SYSTEM_DATABASE_HOST', '$LOCAL_MYSQL_HOST');/" $LOCAL_DIR/conf/config.php
+    #rm -r $LOCAL_DIR/typo3temp
+    ;;
     "xt:commerce")
     # xt:commerce
-    #sed -i "s/'password' => '$REMOTE_MYSQL_PASS'/'password' => '$LOCAL_MYSQL_PASS'/" $LOCAL_DIR/typo3conf/LocalConfiguration.php
-    #sed -i "s/'username' => '$REMOTE_MYSQL_USER'/'username' => '$LOCAL_MYSQL_USER'/" $LOCAL_DIR/typo3conf/LocalConfiguration.php
-    #sed -i "s/'database' => '$REMOTE_MYSQL_DB'/'database' => '$LOCAL_MYSQL_DB'/" $LOCAL_DIR/typo3conf/LocalConfiguration.php
-    #sed -i "s/'host' => '$REMOTE_MYSQL_HOST'/'host' => '$LOCAL_MYSQL_HOST'/" $LOCAL_DIR/typo3conf/LocalConfiguration.php
+    sed -i "s/define('DB_SERVER_PASSWORD', '$REMOTE_MYSQL_PASS');/define('DB_SERVER_PASSWORD', '$LOCAL_MYSQL_PASS');/" $LOCAL_DIR/admin/includes/configure.php
+    sed -i "s/define('DB_SERVER_USERNAME', '$REMOTE_MYSQL_USER');/define('DB_SERVER_USERNAME', '$LOCAL_MYSQL_USER');/" $LOCAL_DIR/admin/includes/configure.php
+    sed -i "s/define('DB_DATABASE', '$REMOTE_MYSQL_DB');/define('DB_DATABASE', '$LOCAL_MYSQL_DB');/" $LOCAL_DIR/admin/includes/configure.php
+    sed -i "s/define('DB_SERVER', '$REMOTE_MYSQL_HOST');/define('DB_SERVER', '$LOCAL_MYSQL_HOST');/" $LOCAL_DIR/admin/includes/configure.php
+    sed -i "s/define('DB_SERVER_PASSWORD', '$REMOTE_MYSQL_PASS');/define('DB_SERVER_PASSWORD', '$LOCAL_MYSQL_PASS');/" $LOCAL_DIR/includes/configure.php
+    sed -i "s/define('DB_SERVER_USERNAME', '$REMOTE_MYSQL_USER');/define('DB_SERVER_USERNAME', '$LOCAL_MYSQL_USER');/" $LOCAL_DIR/includes/configure.php
+    sed -i "s/define('DB_DATABASE', '$REMOTE_MYSQL_DB');/define('DB_DATABASE', '$LOCAL_MYSQL_DB');/" $LOCAL_DIR/includes/configure.php
+    sed -i "s/define('DB_SERVER', '$REMOTE_MYSQL_HOST');/define('DB_SERVER', '$LOCAL_MYSQL_HOST');/" $LOCAL_DIR/includes/configure.php
     #rm -r $LOCAL_DIR/typo3temp
     ;;
 esac
