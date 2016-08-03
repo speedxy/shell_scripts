@@ -82,7 +82,7 @@ case "$CMS" in
     # Shopware
     sed -i "s/'password' => '$REMOTE_MYSQL_PASS'/'password' => '$LOCAL_MYSQL_PASS'/" $LOCAL_DIR/config.php
     sed -i "s/'username' => '$REMOTE_MYSQL_USER'/'username' => '$LOCAL_MYSQL_USER'/" $LOCAL_DIR/config.php
-    sed -i "s/'dbname' => '$REMOTE_MYSQL_DB'/'database' => '$LOCAL_MYSQL_DB'/" $LOCAL_DIR/config.php
+    sed -i "s/'dbname' => '$REMOTE_MYSQL_DB'/'dbname' => '$LOCAL_MYSQL_DB'/" $LOCAL_DIR/config.php
     sed -i "s/'host' => '$REMOTE_MYSQL_HOST'/'host' => '$LOCAL_MYSQL_HOST'/" $LOCAL_DIR/config.php
     chmod u+x $LOCAL_DIR/var/cache/clear_cache.sh
     chmod u+x $LOCAL_DIR/bin/console
