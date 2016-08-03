@@ -43,12 +43,14 @@ echo "Synchronisiere Datenbank: $REMOTE_MYSQL_USER@$REMOTE_MYSQL_HOST.$REMOTE_MY
 
 # Synchronisiere Dateien
 echo "Synchronisiere Dateien..."
+echo "rsync -rltchvzP -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --delete ${REMOTE_SSH_USER}@${REMOTE_HOST}:${REMOTE_DIR} ${LOCAL_DIR}"
 echo "Bitte SSH-Kennwort eingeben:"
 rsync -rltchvzP -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --delete ${REMOTE_SSH_USER}@${REMOTE_HOST}:${REMOTE_DIR} ${LOCAL_DIR}
 echo "Fertig."
 
 # Synchronisiere Datenbank
 echo "Synchronisiere Datenbank..."
+echo "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet ${REMOTE_SSH_USER}@${REMOTE_HOST} "mysqldump -h${REMOTE_MYSQL_HOST} -u${REMOTE_MYSQL_USER} -p*** ${REMOTE_MYSQL_DB}" | mysql -h${LOCAL_MYSQL_HOST} -u$LOCAL_MYSQL_USER -p*** $LOCAL_MYSQL_DB"
 echo "Bitte SSH-Kennwort erneut eingeben:"
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet ${REMOTE_SSH_USER}@${REMOTE_HOST} "mysqldump -h${REMOTE_MYSQL_HOST} -u${REMOTE_MYSQL_USER} -p${REMOTE_MYSQL_PASS} ${REMOTE_MYSQL_DB}" | mysql -h${LOCAL_MYSQL_HOST} -u$LOCAL_MYSQL_USER -p$LOCAL_MYSQL_PASS $LOCAL_MYSQL_DB
 echo "Fertig."
@@ -70,10 +72,10 @@ case "$CMS" in
     ;;
     "typo3-6")
     # TYPO3
-    sed -i "s/'password' => '$REMOTE_MYSQL_PASS'/'password' => '$LOCAL_MYSQL_PASS'/" $LOCAL_DIR/typo3conf/LocalConfi$
-    sed -i "s/'username' => '$REMOTE_MYSQL_USER'/'username' => '$LOCAL_MYSQL_USER'/" $LOCAL_DIR/typo3conf/LocalConfi$
-    sed -i "s/'database' => '$REMOTE_MYSQL_DB'/'database' => '$LOCAL_MYSQL_DB'/" $LOCAL_DIR/typo3conf/LocalConfigura$
-    sed -i "s/'host' => '$REMOTE_MYSQL_HOST'/'host' => '$LOCAL_MYSQL_HOST'/" $LOCAL_DIR/typo3conf/LocalConfiguration$
+    sed -i "s/'password' => '$REMOTE_MYSQL_PASS'/'password' => '$LOCAL_MYSQL_PASS'/" $LOCAL_DIR/typo3conf/LocalConfiguration.php
+    sed -i "s/'username' => '$REMOTE_MYSQL_USER'/'username' => '$LOCAL_MYSQL_USER'/" $LOCAL_DIR/typo3conf/LocalConfiguration.php
+    sed -i "s/'database' => '$REMOTE_MYSQL_DB'/'database' => '$LOCAL_MYSQL_DB'/" $LOCAL_DIR/typo3conf/LocalConfiguration.php
+    sed -i "s/'host' => '$REMOTE_MYSQL_HOST'/'host' => '$LOCAL_MYSQL_HOST'/" $LOCAL_DIR/typo3conf/LocalConfiguration.php
     rm -r $LOCAL_DIR/typo3temp
     ;;
 esac
