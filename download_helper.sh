@@ -17,7 +17,7 @@ CMS="typo3-6"
 SCRIPT_DIR=$(dirname "$0")
 
 REMOTE_SSH_USER="$USER"
-REMOTE_DIR="/var/www/${REMOTE_SSH_USER}/html${REM_DIR}"
+REMOTE_DIR="/var/www/${REMOTE_SSH_USER}/html/${REM_DIR}"
 REMOTE_HOST="pm-server.de"
 REMOTE_MYSQL_HOST="localhost"
 REMOTE_MYSQL_USER="$REMOTE_SSH_USER"
