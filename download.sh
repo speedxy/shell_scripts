@@ -91,9 +91,9 @@ case "$CMS" in
     ;;
     "veyton")
     # VEYTON
-    sed -i "s/define('_SYSTEM_DATABASE_PWD', '$REMOTE_MYSQL_PASS');/define('_SYSTEM_DATABASE_HOST', '$LOCAL_MYSQL_PASS');/" $LOCAL_DIR/conf/config.php
-    sed -i "s/define('_SYSTEM_DATABASE_USER', '$REMOTE_MYSQL_USER');/define('_SYSTEM_DATABASE_HOST', '$LOCAL_MYSQL_USER');/" $LOCAL_DIR/conf/config.php
-    sed -i "s/define('_SYSTEM_DATABASE_DATABASE', '$REMOTE_MYSQL_DB');/define('_SYSTEM_DATABASE_HOST', '$LOCAL_MYSQL_DB');/" $LOCAL_DIR/conf/config.php
+    sed -i "s/define('_SYSTEM_DATABASE_PWD', '$REMOTE_MYSQL_PASS');/define('_SYSTEM_DATABASE_PWD', '$LOCAL_MYSQL_PASS');/" $LOCAL_DIR/conf/config.php
+    sed -i "s/define('_SYSTEM_DATABASE_USER', '$REMOTE_MYSQL_USER');/define('_SYSTEM_DATABASE_USER', '$LOCAL_MYSQL_USER');/" $LOCAL_DIR/conf/config.php
+    sed -i "s/define('_SYSTEM_DATABASE_DATABASE', '$REMOTE_MYSQL_DB');/define('_SYSTEM_DATABASE_DATABASE', '$LOCAL_MYSQL_DB');/" $LOCAL_DIR/conf/config.php
     sed -i "s/define('_SYSTEM_DATABASE_HOST', '$REMOTE_MYSQL_HOST');/define('_SYSTEM_DATABASE_HOST', '$LOCAL_MYSQL_HOST');/" $LOCAL_DIR/conf/config.php
     #rm -r $LOCAL_DIR/typo3temp
     ;;
