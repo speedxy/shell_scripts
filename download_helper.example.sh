@@ -1,8 +1,8 @@
 #!/bin/bash
 USER="user"
 REMOTE_MYSQL_PASS="pass"
-REM_DIR="/remote_directory/"
-LOC_DIR="/local_directory/"
+REM_DIR="remote_directory/"
+LOC_DIR="local_directory/"
 REMOTE_MYSQL_DB="remote_db"
 LOCAL_MYSQL_DB="local_db"
 
