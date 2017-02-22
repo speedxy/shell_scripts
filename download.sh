@@ -57,7 +57,7 @@ echo "Fertig."
 echo "Synchronisiere Datenbank..."
 echo "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet ${REMOTE_SSH_USER}@${REMOTE_HOST} \"mysqldump -h${REMOTE_MYSQL_HOST} -u${REMOTE_MYSQL_USER} -p***** ${REMOTE_MYSQL_DB}\" | mysql -h${LOCAL_MYSQL_HOST} -u$LOCAL_MYSQL_USER -p***** $LOCAL_MYSQL_DB"
 echo "Bitte SSH-Kennwort erneut eingeben:"
-ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet ${REMOTE_SSH_USER}@${REMOTE_HOST} "mysqldump -h${REMOTE_MYSQL_HOST} -u${REMOTE_MYSQL_USER} -p${REMOTE_MYSQL_PASS} {$MYSQLDUMP_CONF} ${REMOTE_MYSQL_DB}" | mysql -h${LOCAL_MYSQL_HOST} -u$LOCAL_MYSQL_USER -p$LOCAL_MYSQL_PASS $LOCAL_MYSQL_DB
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=quiet ${REMOTE_SSH_USER}@${REMOTE_HOST} "mysqldump -h${REMOTE_MYSQL_HOST} -u${REMOTE_MYSQL_USER} -p${REMOTE_MYSQL_PASS} ${MYSQLDUMP_CONF} ${REMOTE_MYSQL_DB}" | mysql -h${LOCAL_MYSQL_HOST} -u$LOCAL_MYSQL_USER -p$LOCAL_MYSQL_PASS $LOCAL_MYSQL_DB
 echo "Fertig."
 
 case "$CMS" in
@@ -95,6 +95,7 @@ case "$CMS" in
     ;;
     "veyton")
     # VEYTON
+    # $LOCAL_DIR/conf/config.php
     sed -i "s/define('_SYSTEM_DATABASE_PWD', '$REMOTE_MYSQL_PASS');/define('_SYSTEM_DATABASE_PWD', '$LOCAL_MYSQL_PASS');/" $LOCAL_DIR/conf/config.php
     sed -i "s/define('_SYSTEM_DATABASE_USER', '$REMOTE_MYSQL_USER');/define('_SYSTEM_DATABASE_USER', '$LOCAL_MYSQL_USER');/" $LOCAL_DIR/conf/config.php
     sed -i "s/define('_SYSTEM_DATABASE_DATABASE', '$REMOTE_MYSQL_DB');/define('_SYSTEM_DATABASE_DATABASE', '$LOCAL_MYSQL_DB');/" $LOCAL_DIR/conf/config.php
@@ -102,6 +103,7 @@ case "$CMS" in
     ;;
     "xt:commerce")
     # xt:commerce
+    # $LOCAL_DIR/includes/configure.php
     sed -i "s/define('DB_SERVER_PASSWORD', '$REMOTE_MYSQL_PASS');/define('DB_SERVER_PASSWORD', '$LOCAL_MYSQL_PASS');/" $LOCAL_DIR/admin/includes/configure.php
     sed -i "s/define('DB_SERVER_USERNAME', '$REMOTE_MYSQL_USER');/define('DB_SERVER_USERNAME', '$LOCAL_MYSQL_USER');/" $LOCAL_DIR/admin/includes/configure.php
     sed -i "s/define('DB_DATABASE', '$REMOTE_MYSQL_DB');/define('DB_DATABASE', '$LOCAL_MYSQL_DB');/" $LOCAL_DIR/admin/includes/configure.php
@@ -112,5 +114,9 @@ case "$CMS" in
     sed -i "s/define('DB_SERVER', '$REMOTE_MYSQL_HOST');/define('DB_SERVER', '$LOCAL_MYSQL_HOST');/" $LOCAL_DIR/includes/configure.php
     sed -i "s@define('DIR_FS_DOCUMENT_ROOT', '.*');@define('DIR_FS_DOCUMENT_ROOT', '$LOCAL_DIR/');@" $LOCAL_DIR/includes/configure.php
     sed -i "s@define('DIR_FS_CATALOG', '.*');@define('DIR_FS_CATALOG', '$LOCAL_DIR/');@" $LOCAL_DIR/includes/configure.php
+    # $LOCAL_DIR/admin/includes/configure.php
+    sed -i "s@define('DIR_FS_DOCUMENT_ROOT', '.*');@define('DIR_FS_DOCUMENT_ROOT', '$LOCAL_DIR/');@" $LOCAL_DIR/admin/includes/configure.php
+    sed -i "s@define('DIR_FS_ADMIN', '.*');@define('DIR_FS_ADMIN', '$LOCAL_DIR/admin/');@" $LOCAL_DIR/admin/includes/configure.php
+    sed -i "s@define('DIR_FS_CATALOG', '.*');@define('DIR_FS_CATALOG', '$LOCAL_DIR/');@" $LOCAL_DIR/admin/includes/configure.php
     ;;
 esac
